@@ -1,28 +1,28 @@
-from pathlib import Path
-
 from sqlalchemy import insert
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from models import Storage, Item, StorageId_T
 
 
-def create_storage(session: Session, name: str, img: Path) -> None:
-    session.execute(
-        insert(Storage)
-        .values(name=name, img=img)
-    )
-    session.commit()
+async def create_storage(
+    session: AsyncSession, name: str, img_path: str
+) -> Storage:
+    stmt = insert(Storage).values(name=name, img=img_path).returning(Storage)
+    result = await session.execute(stmt)
+    await session.commit()
+    return result.scalar_one()
 
 
-def create_item(
-    session: Session,
+async def create_item(
+    session: AsyncSession,
     name: str,
-    img: Path,
-    storage: StorageId_T,
+    img_path: str,
+    storage_id: StorageId_T,
     info: str | None = None
-) -> None:
-    session.execute(
-        insert(Item)
-        .values(name=name, img=img, storage=storage, info=info)
-    )
-    session.commit()
+) -> Item:
+    stmt = insert(Item).values(
+        name=name, img=img_path, storage=storage_id, info=info
+    ).returning(Item)
+    result = await session.execute(stmt)
+    await session.commit()
+    return result.scalar_one()
