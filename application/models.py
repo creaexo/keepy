@@ -3,8 +3,8 @@ from typing import NewType
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 
-StorageId_T = NewType('StorageId_T', int)
-"""Тип идентификаторов хранилищ."""
+StorageName_T = NewType('StorageName_T', str)
+"""Тип имени хранилищ."""
 
 
 class Base(DeclarativeBase):
@@ -13,16 +13,17 @@ class Base(DeclarativeBase):
 
 class Storage(Base):
     __tablename__ = 'storage'
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(30))
-    img: Mapped[str] = mapped_column(String(100))
+    name: Mapped[str] = mapped_column(String(30), primary_key=True)
+    img: Mapped[str] = mapped_column(String(100), nullable=True)
 
 
 class Item(Base):
     __tablename__ = 'item'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
-    img: Mapped[str] = mapped_column(String(100))
-    storage: Mapped[StorageId_T] = mapped_column(ForeignKey('storage.id', ondelete='RESTRICT'))
+    storage: Mapped[StorageName_T] = mapped_column(
+        ForeignKey('storage.name', ondelete='RESTRICT')
+    )
+    img: Mapped[str] = mapped_column(String(100), nullable=True)
     info: Mapped[str] = mapped_column(String(200), nullable=True)
     """Дополнительные информация о предмете, которая поможет его найти, если не помнишь название."""

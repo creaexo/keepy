@@ -1,7 +1,7 @@
 from sqlalchemy import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import Storage, Item, StorageId_T
+from models import Storage, Item, StorageName_T
 
 
 async def create_storage(
@@ -17,7 +17,7 @@ async def create_item(
     session: AsyncSession,
     name: str,
     img_path: str,
-    storage_id: StorageId_T,
+    storage_id: StorageName_T,
     info: str | None = None
 ) -> Item:
     stmt = insert(Item).values(
