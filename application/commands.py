@@ -1,12 +1,10 @@
 from sqlalchemy import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import Storage, Item, StorageName_T
+from application.models import Item, Storage, StorageName_T
 
 
-async def create_storage(
-    session: AsyncSession, name: str, img_path: str
-) -> Storage:
+async def create_storage(session: AsyncSession, name: str, img_path: str) -> Storage:
     stmt = insert(Storage).values(name=name, img=img_path).returning(Storage)
     result = await session.execute(stmt)
     await session.commit()
@@ -18,11 +16,15 @@ async def create_item(
     name: str,
     img_path: str,
     storage_id: StorageName_T,
-    info: str | None = None
+    info: str | None = None,
 ) -> Item:
-    stmt = insert(Item).values(
-        name=name, img=img_path, storage=storage_id, info=info
-    ).returning(Item)
+    # fmt: off
+    stmt = (
+        insert(Item)
+        .values(name=name, img=img_path, storage=storage_id, info=info)
+        .returning(Item)
+    )
+    # fmt: on
     result = await session.execute(stmt)
     await session.commit()
     return result.scalar_one()
