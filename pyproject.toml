@@ -22,3 +22,43 @@ dependencies = [
 lint = [
     "ruff~=0.12.1",
 ]
+
+[tool.ruff]
+preview = true
+line-length = 100
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = true
+line-ending = "auto"
+
+[tool.ruff.lint]
+select = [
+    "PD", # pep8-naming
+    "S", # bandit
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "B", # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+    "RUF", #  ruff specific style
+    "ISC", # flakes-implicit-str-concat
+    "G", # flake8-logging-format
+    "PIE", # flake8-pie
+    "T20", # flake8-print
+    "SIM", # flake8-simplify
+    "TID", # flake8-tidy-imports
+    "INT", # flake8-gettext
+    "ERA", # flake8-eradicate
+    "EM", # flake8-errmsg
+    "BLE", # flake8-blind-except
+    "PERF", # Perflint
+    "FAST", # Fastapi
+#    "DTZ", # flake8-datetimez
+]
+ignore = ["S101", "RUF001", "RUF002", "RUF003"]
