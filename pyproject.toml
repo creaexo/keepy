@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "keepy"
+requires-python = ">=3.11"
+description = "A program for organizing and storing everyday household belongings."
+readme = "README.md"
+authors = [
+    { name = 'creaexo"', email = 'creaexo@gmail.com' },
+]
+classifiers = [
+    "Typing :: Typed",
+]
+
+dependencies = [
+    "sqlalchemy==2.0.41",
+]
+
+[dependency-groups]
+lint = [
+    "ruff~=0.12.1",
+]
