@@ -15,7 +15,9 @@ classifiers = [
 ]
 
 dependencies = [
+    "aiogram==3.20.0",
     "sqlalchemy==2.0.41",
+    "python-dotenv==1.1.1",
 ]
 
 [dependency-groups]
