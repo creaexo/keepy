@@ -13,3 +13,5 @@ ITEM_IMG.mkdir(parents=True, exist_ok=True)
 
 API_TOKEN = os.getenv('KEEPY_TELEGRAM_TOKEN')
 REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+
+DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite+aiosqlite:///keepy.db')

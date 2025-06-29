@@ -1,11 +1,9 @@
-import os
 from collections.abc import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from application.models import Base
-
-DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite+aiosqlite:///./keepy.db')
+from const import DATABASE_URL
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 AsyncSessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False)
